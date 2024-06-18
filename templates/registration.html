@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Registration</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Регистрация</h1>
+        <form action="" method="post">
+            <label for="lastname">Фамилия:</label>
+            <input type="text" id="lastname" name="lastname" required>
+
+            <label for="firstname">Имя:</label>
+            <input type="text" id="firstname" name="firstname" required>
+
+            <label for="middlename">Отчество:</label>
+            <input type="text" id="middlename" name="middlename" required>
+
+            <label for="birthdate">День рождения:</label>
+            <input type="date" id="birthdate" name="birthdate" required>
+
+            <label for="inn">ИНН:</label>
+            <input type="text" id="inn" name="inn" required>
+
+            <label for="responsible">ФИО Ответственного специалиста:</label>
+            <input type="text" id="responsible" name="responsible" required>
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+    </div>
+</body>
+</html>
