@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 
 
 class Client:
@@ -8,7 +7,8 @@ class Client:
         self.db = self.client[db_name]
         self.collection = self.db[collection_name]
 
-    def create(self, number, last_name, first_name, middle_name, date_of_birth, inn, responsible_full_name, status='Не в работе'):
+    def create(self, number, last_name, first_name, middle_name, date_of_birth, inn, responsible_full_name,
+               status='Не в работе'):
         client = {
             'number': number,
             'last_name': last_name,
@@ -46,19 +46,3 @@ class Client:
         """Находит документы в коллекции по заданному запросу."""
         cursor = self.collection.find(query)
         return cursor
-
-# client_manager = Client()
-
-# # Create a new client
-# new_client = client_manager.create('Doe', 'John', 'Александрович', '1990-01-01', '123456789012', 'Ответственный ФИО', 'Не в работе')
-# print(new_client)
-#
-# # Find a client by INN
-# found_client = client_manager.find_one({'inn': '123456789012'})
-# print(found_client)
-#
-# # Update a client's responsible_full_name
-# client_manager.update({'inn': '123456789012'}, {'responsible_full_name': 'Новый Ответственный ФИО'})
-
-# # Delete a client by INN
-# client_manager.delete({'inn': '123456789012'})

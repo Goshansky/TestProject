@@ -3,18 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    {#    <link rel="stylesheet" href="{{ url_for('static', filename='account_style.css') }}">#}
     <title>Account</title>
 </head>
 <body>
-     <h1>Мой аккаунт</h1>
-    {% for client in clients %}
-        <p>Фамилия: {{ client.last_name }}</p>
-        <p>Имя: {{ client.first_name }}</p>
-        <p>Отчество: {{ client.middle_name }}</p>
-        <p>День рождения: {{ client.date_of_birth }}</p>
-        <p>ИНН: {{ client.inn }}</p>
-        <p>Ответственный специалист: {{ client.responsible_full_name }}</p>
-        <hr>
-    {% endfor %}
+<div class="container-fluid">
+    <div class="row border-bottom mb-4">
+        <div class="col">
+            <h1 class="text-center py-2">Мой аккаунт: {{ user.login }} ({{ user.full_name }})</h1>
+        </div>
+        <div class="col-auto">
+            <form action="{{ url_for('logout') }}" method="post"
+                  class="d-flex justify-content-end align-items-center h-100">
+                <button type="submit" class="btn btn-outline-secondary">Выйти из аккаунта</button>
+            </form>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped mt-4">
+        <thead>
+        <tr>
+            <th>Номер счёта</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>День рождения</th>
+            <th>ИНН</th>
+            <th>Ответственный специалист</th>
+            <th>Статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for client in clients %}
+            <tr>
+                <td>{{ client.number }}</td>
+                <td>{{ client.last_name }}</td>
+                <td>{{ client.first_name }}</td>
+                <td>{{ client.middle_name }}</td>
+                <td>{{ client.date_of_birth }}</td>
+                <td>{{ client.inn }}</td>
+                <td>{{ client.responsible_full_name }}</td>
+                <td>
+                    <form action="{{ url_for('update_client_status', client_id=client._id) }}" method="post">
+                        <select id="status" name="status" class="form-control" onchange="this.form.submit()">
+                            <option value="Не в работе" {% if client.status == 'Не в работе' %}selected{% endif %}>Не в
+                                работе
+                            </option>
+                            <option value="В работе" {% if client.status == 'В работе' %}selected{% endif %}>В работе
+                            </option>
+                            <option value="Отказ" {% if client.status == 'Отказ' %}selected{% endif %}>Отказ</option>
+                            <option value="Сделка закрыта"
+                                    {% if client.status == 'Сделка закрыта' %}selected{% endif %}>Сделка закрыта
+                            </option>
+                        </select>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

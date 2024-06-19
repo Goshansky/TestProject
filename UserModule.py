@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 
 
 class User:
@@ -36,20 +35,3 @@ class User:
 
     def delete(self, query):
         self.collection.delete_one(query)
-
-
-# user_manager = User()
-#
-# # Create a new user
-# new_user = user_manager.create('John Doe', 'johndoe', 'password123')
-# print(new_user)
-#
-# # Find a user by login
-# found_user = user_manager.find_one({'login': 'johndoe'})
-# print(found_user)
-#
-# # Update a user's password
-# user_manager.update({'login': 'johndoe'}, {'password': 'new_password'})
-
-# # Delete a user by login
-# user_manager.delete({'login': 'johndoe'})

@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from pymongo import MongoClient
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from bson.objectid import ObjectId
 from UserModule import User
 from ClientModule import Client
@@ -15,7 +14,8 @@ client_manager = Client()
 @app.route('/')
 def home():
     if 'user_id' in session:
-        return render_template('index.html')
+        user_id = session['user_id']
+        return redirect(url_for('account', user_id=user_id))
     else:
         return redirect(url_for('show_login'))
 
@@ -35,10 +35,11 @@ def login():
         session['user_id'] = user['_id']
         return redirect(url_for('account', user_id=user['_id']))
     else:
-        return 'Invalid username or password'
+        flash('Неправильный логин или пароль')
+        return redirect(url_for('show_login'))
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
     if 'user_id' in session:
         session.pop('user_id')
@@ -54,7 +55,19 @@ def account(user_id):
         clients = client_manager.find({'responsible_full_name': user['full_name']})
         clients = list(clients)
         # Передаём информацию о клиенте в шаблон
-        return render_template('account.html', clients=clients)
+        return render_template('account.html', user=user, clients=clients)
+    else:
+        return redirect(url_for('show_login'))
+
+
+@app.route('/client/<client_id>/update_status', methods=['POST'])
+def update_client_status(client_id):
+    if 'user_id' in session:
+        user_id = session['user_id']
+        # Обновляем статус клиента
+        client_manager.update({'_id': ObjectId(client_id)}, {'status': str(request.form['status'])})
+        # Перенаправляем пользователя на страницу клиента
+        return redirect(url_for('account', user_id=user_id))
     else:
         return redirect(url_for('show_login'))
 
