@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+</head>
+<body>
+     <h1>Мой аккаунт</h1>
+    {% for client in clients %}
+        <p>Фамилия: {{ client.last_name }}</p>
+        <p>Имя: {{ client.first_name }}</p>
+        <p>Отчество: {{ client.middle_name }}</p>
+        <p>День рождения: {{ client.date_of_birth }}</p>
+        <p>ИНН: {{ client.inn }}</p>
+        <p>Ответственный специалист: {{ client.responsible_full_name }}</p>
+        <hr>
+    {% endfor %}
+</body>
+</html>
