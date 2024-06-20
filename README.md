@@ -26,6 +26,7 @@
 
 
 ## Как запустить
+Проект был разработан в среде разработки [PyCharm](https://www.jetbrains.com/ru-ru/pycharm/)
 Проект написан на Python 3.9 c использованием фреймворка Flask и библиотек pymongo, bson, faker.
 Скачайте [Python3.9](https://www.python.org/downloads/release/python-390/)
 
@@ -47,6 +48,10 @@ docker pull mongo
 Запустим docker-контейнер с примонтированной директорией dump:
 ```
 docker run --name some-mongo -p 27017:27017 -v /dump:/dump -d mongo
+```
+Перенесем дамп БД в докер-контейнер:
+```
+docker cp ./dump/db some-mongo:/dump/
 ```
 Зайдем в контейнер в интерактивном режиме:
 ```
